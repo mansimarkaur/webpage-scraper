@@ -18,8 +18,11 @@ for i in text :
 j = 0
 for i in links :
 	image = urllib.URLopener(i)
-	image.retrieve(i, j)
+	image.retrieve(i, j, hook())
 	j += 1
+
+def hook(num_of_blocks, block_size, file_size) :
+	print "%s percent of the image file downloaded"%(num_of_blocks*block_size*100/file_size)
 
 
 
