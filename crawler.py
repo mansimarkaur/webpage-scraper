@@ -20,6 +20,10 @@ def hyperlinks() :
 def text() :
 	print soup.get_text()
 
+##formatter
+def format() :
+	print soup.prettify()
+
 
 
 
