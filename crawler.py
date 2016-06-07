@@ -5,15 +5,22 @@ link = urllib2.urlopen(url)
 soup = BeautifulSoup(link, 'html.parser')
 
 ##images
-img = soup.find_all("img")
-for i in img :
-	print i.get("src")
-
+def image() :
+	img = soup.find_all("img")
+	for i in img :
+		print i.get("src")
 
 ##links
-img = soup.find_all("a")
-for i in img :
-	print i.get("href")
+def hyperlinks() :
+	img = soup.find_all("a")
+	for i in img :
+		print i.get("href")
+
+##text
+def text() :
+	print soup.get_text()
+
+
 
 
 
