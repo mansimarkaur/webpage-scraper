@@ -4,6 +4,13 @@ url = raw_input("Enter URL")
 link = urllib2.urlopen(url)
 soup = BeautifulSoup(link, 'html.parser')
 
+print "Choose and enter corresponding index of option"
+print "1. Fetch images"
+print "2. Fetch hyperlinks"
+print "3. Fetch text"
+print "4. Format HTML"
+option = raw_input()
+
 ##images
 def image() :
 	img = soup.find_all("img")
