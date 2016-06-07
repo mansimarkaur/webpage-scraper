@@ -10,7 +10,10 @@ for i in img :
 	print i.get("src")
 
 
-
+##links
+img = soup.find_all("a")
+for i in img :
+	print i.get("href")
 
 
 
