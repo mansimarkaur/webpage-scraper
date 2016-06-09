@@ -24,9 +24,10 @@ def hyperlinks() :
 		print i.get("href")
 
 ##text
-"""def text() :
-	print soup.get_text()
+def text() :
+	print soup.get_text().encode('UTF-8')
 
+"""
 ##formatter
 def format() :
 	print soup.prettify()"""
@@ -38,7 +39,7 @@ def main(option) :
 	dict = {
 		"1" : image,
 		"2" : hyperlinks,
-		"3" : download,
+		"3" : text,
 	}
 	func = dict.get(option, lambda : "Invalid")
 	print func
