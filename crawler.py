@@ -1,4 +1,5 @@
 import urllib2
+import urllib
 import sys
 from bs4 import BeautifulSoup
 url = raw_input("Enter URL")
@@ -16,14 +17,25 @@ def menu():
 	return option 
 
 
+##download
+def download(img) :
+	pass
+
 ##images
 def image() :
 	img = soup.find_all("img")
+	if len(img) == 0 :
+		print "No images to fetch"
+		return
 	for i in img :
+		download(i.get("src"))
 		print i.get("src")
 ##links
 def hyperlinks() :
 	img = soup.find_all("a")
+	if len(img) == 0 :
+		print "No hyperlinks to fetch"
+		return
 	for i in img :
 		print i.get("href")
 
