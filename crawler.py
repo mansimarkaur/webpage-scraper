@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 url = raw_input("Enter URL")
 if not (url.startswith("http://") or url.startswith("https://"))  :
 	url = "http://" + url
+if not url.endswith("/") :
+	url = url + "/"
 link = urllib2.urlopen(url)
 soup = BeautifulSoup(link, 'html.parser')
 
@@ -34,11 +36,13 @@ def hook(count_transferred, block_size, total_size) :
 ##download
 def download(img) :
 	dir_name = url[7:] 
+	print url + img
+	print dir_name+img
 	try :
 		os.stat(dir_name)
 	except :
 		os.mkdir(dir_name)
-	urllib.urlretrieve(url+img, dir_name+"/"+img, hook)
+	urllib.urlretrieve(url+img, dir_name+img, hook)
 
 ##images
 def image() :
