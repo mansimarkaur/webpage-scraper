@@ -1,8 +1,11 @@
 import urllib2
 import urllib
+import os
 import sys
 from bs4 import BeautifulSoup
 url = raw_input("Enter URL")
+if not (url.startswith("http://") or url.startswith("https://"))  :
+	url = "http://" + url
 link = urllib2.urlopen(url)
 soup = BeautifulSoup(link, 'html.parser')
 
@@ -17,9 +20,25 @@ def menu():
 	return option 
 
 
+##hook function
+def hook(count_transferred, block_size, total_size) :
+	tot = int(total_size/block_size)
+	for i in range(count_transferred) :
+		print "#"
+	for i in range(tot - count_transferred):
+		print "_"
+	print "|" + "%s % downloaded"%(count_transferred*100/tot)
+
+
+
 ##download
 def download(img) :
-	pass
+	dir_name = url[7:] 
+	try :
+		os.stat(dir_name)
+	except :
+		os.mkdir(dir_name)
+	urllib.urlretrieve(url+img, dir_name+"/"+img, hook)
 
 ##images
 def image() :
