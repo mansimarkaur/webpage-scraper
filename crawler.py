@@ -2,7 +2,15 @@ import urllib2
 import urllib
 import os
 import sys
+from flask import Flask
 from bs4 import BeautifulSoup
+
+scrape = Flask(__name__)
+
+@status.route("/")
+def main() :
+	return render_template("index.html")
+
 url = raw_input("Enter URL")
 if not (url.startswith("http://") or url.startswith("https://"))  :
 	url = "http://" + url
@@ -26,9 +34,9 @@ def menu():
 def hook(count_transferred, block_size, total_size) :
 	tot = int(total_size/block_size)
 	for i in range(count_transferred) :
-		print "#"
+		print "#",
 	for i in range(tot - count_transferred):
-		print "_"
+		print "_",
 	print "|" + "%s % downloaded"%(count_transferred*100/tot)
 
 
@@ -45,6 +53,7 @@ def download(img) :
 	urllib.urlretrieve(url+img, dir_name+img, hook)
 
 ##images
+@status.route("#image")
 def image() :
 	img = soup.find_all("img")
 	if len(img) == 0 :
@@ -53,7 +62,10 @@ def image() :
 	for i in img :
 		download(i.get("src"))
 		print i.get("src")
+
+
 ##links
+@status.route("#hyperlinks")
 def hyperlinks() :
 	img = soup.find_all("a")
 	if len(img) == 0 :
@@ -63,10 +75,12 @@ def hyperlinks() :
 		print i.get("href")
 
 ##text
+@status.route("#text")
 def text() :
 	print soup.get_text().encode('UTF-8')
 
 ##formatter
+@status.route("#formatter")
 def formatter() :
 	yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
 	yes = yes.upper()
@@ -78,7 +92,7 @@ def formatter() :
 	else :
 		print soup.prettify().encode('UTF-8')
 	
-
+@status.route("#exit")
 def exit_scraper() :
 	sys.exit("Bye :)")
 
