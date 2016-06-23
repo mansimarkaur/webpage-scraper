@@ -16,7 +16,6 @@ body {
 	background-color: #222;
 	width: 100%;
 	bottom: 0px;
-	position: fixed;
 }
 
 .row{
@@ -26,8 +25,6 @@ body {
 
 #panel{
 	float: none;
-	margin-left: 25%;
-    margin-bottom: 10%;
 }
 
 p {
@@ -119,6 +116,14 @@ h3, h4 {
 
 .navbar-header .navbar-brand span {
 	color: #30a5ff;
+}
+
+.butt{
+	width: 20%;
+    padding: 0px;
+    border: none;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 /*Buttons*/
@@ -452,6 +457,7 @@ a.bg-danger:hover {
 
 .panel-widget {
 	background: #fff;
+	margin-bottom: 0px;
 }
 
 /*Jumbotron*/
