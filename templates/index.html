@@ -87,7 +87,7 @@
 			</div>
 		</div><!--/.row-->
 		<div>
-            <form class="form-signin" method="post">
+            <form class="form-signin" method="post" action="/driver">
             	<div class="jumbotron">
 	                <h1>Enter URL</h1>
 	                <label for="inputName" class="sr-only">URL</label>
@@ -98,7 +98,7 @@
   
 		
 		<div class="row">
-			<button class="col-xs-12 col-md-6 col-lg-3 butt" type="submit">
+			<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" name="submit" type="submit" value="images">
 				<div class="panel panel-blue panel-widget ">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -111,7 +111,7 @@
 					</div>
 				</div>
 			</button>
-			<button class="col-xs-12 col-md-6 col-lg-3 butt" type="submit">
+			<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" type="submit" value="hyperlinks">
 				<div class="panel panel-orange panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -124,7 +124,7 @@
 					</div>
 				</div>
 			</button>
-			<button class="col-xs-12 col-md-6 col-lg-3 butt" type="submit">
+			<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" type="submit" value="formatter">
 				<div class="panel panel-teal panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -137,7 +137,7 @@
 					</div>
 				</div>
 			</button>
-			<button class="col-xs-12 col-md-6 col-lg-3 butt" type="submit">
+			<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" type="submit" value="text">
 				<div class="panel panel-red panel-widget">
 					<div class="row no-padding">
 						<div class="col-sm-3 col-lg-5 widget-left">
@@ -258,7 +258,7 @@
 					
 					<div class="panel-footer">
 						<div class="input-group">
-							<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here..." />
+							<input id="btn-input" name="submit" type="text" class="form-control input-md" placeholder="Type your message here..." />
 							<span class="input-group-btn">
 								<button class="btn btn-success btn-md" id="btn-chat">Send</button>
 							</span>
@@ -274,10 +274,11 @@
 					<div class="panel-heading dark-overlay"><svg class="glyph stroked clipboard-with-paper"><use xlink:href="#stroked-clipboard-with-paper"></use></svg>To-do List</div>
 					<div class="panel-body">
 						<ul class="todo-list">
+						{% for i in text : %}
 						<li class="todo-list-item">
 								<div class="checkbox">
 									<input type="checkbox" id="checkbox" />
-									<label for="checkbox">Make a plan for today</label>
+									<label for="checkbox">{{ i }}</label>
 								</div>
 								<div class="pull-right action-buttons">
 									<a href="#"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg></a>
@@ -285,7 +286,8 @@
 									<a href="#" class="trash"><svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg></a>
 								</div>
 							</li>
-							<li class="todo-list-item">
+							{% endfor %}
+							<!--<li class="todo-list-item">
 								<div class="checkbox">
 									<input type="checkbox" id="checkbox" />
 									<label for="checkbox">Update Basecamp</label>
