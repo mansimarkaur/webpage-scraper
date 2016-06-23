@@ -2,7 +2,7 @@ import urllib2
 import urllib
 import os
 import sys
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from bs4 import BeautifulSoup
 
 crawler = Flask(__name__)
@@ -10,6 +10,29 @@ crawler = Flask(__name__)
 @crawler.route("/")
 def main() :
 	return render_template("index.html")
+
+@crawler.route("/driver", methods = ['POST'])
+def driver() :
+	url = request.form["inputName"]
+	if not (url.startswith("http://") or url.startswith("https://"))  :
+		url = "http://" + url
+	if not url.endswith("/") :
+		url = url + "/"
+	link = urllib2.urlopen(url)
+	soup = BeautifulSoup(link, 'html.parser')
+	job = request.form["submit"]
+	dict = {
+		"images" : image,
+		"hyperlinks" : hyperlinks,
+		"text" : text,
+		"formatter" : formatter
+		}
+
+	for i in dict :
+		if job == i :
+			func = dict.get(job)#, lambda option : "%s is an invalid option."%option)
+			#print func
+			return func(url, soup)
 
 # url = raw_input("Enter URL")
 # if not (url.startswith("http://") or url.startswith("https://"))  :
@@ -42,7 +65,7 @@ def hook(count_transferred, block_size, total_size) :
 
 
 ##download
-def download(img) :
+def download(url, img) :
 	dir_name = url[7:] 
 	print url + img
 	print dir_name+img
@@ -54,34 +77,39 @@ def download(img) :
 
 ##images
 @crawler.route("/image")
-def image() :
+def image(url, soup) :
 	img = soup.find_all("img")
 	if len(img) == 0 :
 		print "No images to fetch"
 		return
 	for i in img :
-		download(i.get("src"))
+		download(url, i.get("src"))
 		print i.get("src")
 
 
 ##links
 @crawler.route("/hyperlinks")
-def hyperlinks() :
+def hyperlinks(url, soup) :
 	img = soup.find_all("a")
-	if len(img) == 0 :
-		print "No hyperlinks to fetch"
-		return
+	links = []
 	for i in img :
-		print i.get("href")
+		l = i.get("href")
+		if l[:4] != "http" :
+			l = url + l
+		links.append(l)
+	if len(img) == 0 :
+		return render_template("index.html", text = ["No hyperlinks to fetch"])
+	else :
+		return render_template("index.html", text = links)
 
 ##text
 @crawler.route("/text")
-def text() :
+def text(url, soup) :
 	print soup.get_text().encode('UTF-8')
 
 ##formatter
 @crawler.route("/formatter")
-def formatter() :
+def formatter(url, soup) :
 	yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
 	yes = yes.upper()
 	if yes == "Y" :
