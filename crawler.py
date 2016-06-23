@@ -2,22 +2,22 @@ import urllib2
 import urllib
 import os
 import sys
-from flask import Flask
+from flask import Flask, render_template
 from bs4 import BeautifulSoup
 
-scrape = Flask(__name__)
+crawler = Flask(__name__)
 
 @crawler.route("/")
 def main() :
 	return render_template("index.html")
 
-url = raw_input("Enter URL")
-if not (url.startswith("http://") or url.startswith("https://"))  :
-	url = "http://" + url
-if not url.endswith("/") :
-	url = url + "/"
-link = urllib2.urlopen(url)
-soup = BeautifulSoup(link, 'html.parser')
+# url = raw_input("Enter URL")
+# if not (url.startswith("http://") or url.startswith("https://"))  :
+# 	url = "http://" + url
+# if not url.endswith("/") :
+# 	url = url + "/"
+# link = urllib2.urlopen(url)
+# soup = BeautifulSoup(link, 'html.parser')
 
 # def menu():
 # 	print "Choose and enter corresponding index of option"
@@ -53,7 +53,7 @@ def download(img) :
 	urllib.urlretrieve(url+img, dir_name+img, hook)
 
 ##images
-@crawler.route("#image")
+@crawler.route("/image")
 def image() :
 	img = soup.find_all("img")
 	if len(img) == 0 :
@@ -65,7 +65,7 @@ def image() :
 
 
 ##links
-@crawler.route("#hyperlinks")
+@crawler.route("/hyperlinks")
 def hyperlinks() :
 	img = soup.find_all("a")
 	if len(img) == 0 :
@@ -75,12 +75,12 @@ def hyperlinks() :
 		print i.get("href")
 
 ##text
-@crawler.route("#text")
+@crawler.route("/text")
 def text() :
 	print soup.get_text().encode('UTF-8')
 
 ##formatter
-@crawler.route("#formatter")
+@crawler.route("/formatter")
 def formatter() :
 	yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
 	yes = yes.upper()
