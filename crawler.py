@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 scrape = Flask(__name__)
 
-@status.route("/")
+@crawler.route("/")
 def main() :
 	return render_template("index.html")
 
@@ -19,15 +19,15 @@ if not url.endswith("/") :
 link = urllib2.urlopen(url)
 soup = BeautifulSoup(link, 'html.parser')
 
-def menu():
-	print "Choose and enter corresponding index of option"
-	print "1. Fetch images"
-	print "2. Fetch hyperlinks"
-	print "3. Fetch text"
-	print "4. Format HTML"
-	print "5. Exit"
-	option = raw_input()
-	return option 
+# def menu():
+# 	print "Choose and enter corresponding index of option"
+# 	print "1. Fetch images"
+# 	print "2. Fetch hyperlinks"
+# 	print "3. Fetch text"
+# 	print "4. Format HTML"
+# 	print "5. Exit"
+# 	option = raw_input()
+# 	return option 
 
 
 ##hook function
@@ -53,7 +53,7 @@ def download(img) :
 	urllib.urlretrieve(url+img, dir_name+img, hook)
 
 ##images
-@status.route("#image")
+@crawler.route("#image")
 def image() :
 	img = soup.find_all("img")
 	if len(img) == 0 :
@@ -65,7 +65,7 @@ def image() :
 
 
 ##links
-@status.route("#hyperlinks")
+@crawler.route("#hyperlinks")
 def hyperlinks() :
 	img = soup.find_all("a")
 	if len(img) == 0 :
@@ -75,12 +75,12 @@ def hyperlinks() :
 		print i.get("href")
 
 ##text
-@status.route("#text")
+@crawler.route("#text")
 def text() :
 	print soup.get_text().encode('UTF-8')
 
 ##formatter
-@status.route("#formatter")
+@crawler.route("#formatter")
 def formatter() :
 	yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
 	yes = yes.upper()
@@ -92,28 +92,28 @@ def formatter() :
 	else :
 		print soup.prettify().encode('UTF-8')
 	
-@status.route("#exit")
-def exit_scraper() :
-	sys.exit("Bye :)")
+# @crawler.route("#exit")
+# def exit_scraper() :
+# 	sys.exit("Bye :)")
 
-def main(option) :
+# def main(option) :
 
-	dict = {
-		"1" : image,
-		"2" : hyperlinks,
-		"3" : text,
-		"4" : formatter,
-		"5" : exit_scraper
-	}
+# 	dict = {
+# 		"1" : image,
+# 		"2" : hyperlinks,
+# 		"3" : text,
+# 		"4" : formatter,
+# 		"5" : exit_scraper
+# 	}
 
-	for i in dict :
-		if option == i :
-			func = dict.get(option, lambda option : "%s is an invalid option."%option)
-			print func
-			return func()
-	else :
-		print "Enter valid option please!"
-	main(menu())
+# 	for i in dict :
+# 		if option == i :
+# 			func = dict.get(option, lambda option : "%s is an invalid option."%option)
+# 			print func
+# 			return func()
+# 	else :
+# 		print "Enter valid option please!"
+# 	main(menu())
 
 if __name__ == "__main__" :
-	main(menu())
+	crawler.run()
