@@ -80,11 +80,15 @@ def download(url, img) :
 def image(url, soup) :
 	img = soup.find_all("img")
 	if len(img) == 0 :
-		print "No images to fetch"
-		return
+		#print "No images to fetch"
+		return render_template("index.html", text = ["No images to fetch"])
+	links = []
 	for i in img :
-		download(url, i.get("src"))
-		print i.get("src")
+		links.append(url + i.get("src"))
+		#download(url, i.get("src"))
+		#print i.get("src")
+	return render_template("index.html", text = links)
+
 
 
 ##links
@@ -98,7 +102,7 @@ def hyperlinks(url, soup) :
 			l = url + l
 		links.append(l)
 	if len(img) == 0 :
-		return render_template("index.html", text = ["No hyperlinks to fetch"])
+		return render_template("index.html", text = ["No hyperlinks to fetch"], func = "hyperlinks")
 	else :
 		return render_template("index.html", text = links)
 
