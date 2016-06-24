@@ -62,9 +62,9 @@ def txt(url, soup) :
 
 #displays formatted html src code, (not sure how it'll behave in index.html after being rendered)
 def formatter(url, soup) :
-	code = soup.prettify().encode('UTF-8')
+	code = soup.prettify()#.encode('UTF-8')
 	print type(code)
-	return render_template("index.html", text = txt)
+	return render_template("text.html", text = code)
 
 @crawler.route("/download") 
 def download() :
