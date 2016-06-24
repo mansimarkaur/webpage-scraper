@@ -52,17 +52,18 @@ def hyperlinks(url, soup) :
 		if l[:4] != "http" :
 			l = url + l 
 		links.append(l)
-	return render_template("index.html", text = links)
+	return render_template("links.html", text = links)
 
 #displays text after stripping html tags from src code
 def txt(url, soup) :
 	t = soup.get_text()#.encode('UTF-8') 
 	print type(t)
-	return render_template("index.html", text = t)
+	return render_template("text.html", text = t)
 
 #displays formatted html src code, (not sure how it'll behave in index.html after being rendered)
 def formatter(url, soup) :
 	code = soup.prettify().encode('UTF-8')
+	print type(code)
 	return render_template("index.html", text = txt)
 
 @crawler.route("/download") 
