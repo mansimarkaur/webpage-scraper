@@ -11,7 +11,7 @@ crawler = Flask(__name__)
 def main() :
 	return render_template("index.html")
 
-@crawler.route("/driver")
+@crawler.route("/driver", methods = ['POST'])
 def driver() :
 	url = request.form["inputName"] #fetches user entered URL
 	if not (url.startswith("https://")) or not(url.startswith("https://")) :
@@ -65,3 +65,6 @@ def formatter(url, soup) :
 
 if __name__ == "__main__" :
 	crawler.run()
+
+@crawler.route("/download") :
+def download() :
