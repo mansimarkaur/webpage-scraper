@@ -109,20 +109,23 @@ def hyperlinks(url, soup) :
 ##text
 @crawler.route("/text")
 def text(url, soup) :
-	print soup.get_text().encode('UTF-8')
+	t = soup.get_text().encode('UTF-8')
+	print t
+	return render_template("index.html", text = t)
 
 ##formatter
 @crawler.route("/formatter")
 def formatter(url, soup) :
-	yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
-	yes = yes.upper()
-	if yes == "Y" :
-		name = raw_input("Enter name of file")
-		with open(name+".html","w+") as pretty :
-			pretty.write(soup.prettify().encode('UTF-8'))
-		print "Updated contents of file"
-	else :
-		print soup.prettify().encode('UTF-8')
+	# yes = raw_input("Do you want to save the formatted html in a .html file? Press Y for yes and any other key for no.")
+	# yes = yes.upper()
+	# if yes == "Y" :
+	# 	name = raw_input("Enter name of file")
+	# 	with open(name+".html","w+") as pretty :
+	# 		pretty.write(soup.prettify().encode('UTF-8'))
+	# 	print "Updated contents of file"
+	# else :
+	print soup.prettify().encode('UTF-8')
+	return render_template("index.html", text = soup.prettify().encode('UTF-8'))
 	
 # @crawler.route("#exit")
 # def exit_scraper() :
