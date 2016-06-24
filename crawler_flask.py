@@ -66,6 +66,6 @@ def formatter(url, soup) :
 if __name__ == "__main__" :
 	crawler.run()
 
-@crawler.route("/download") :
+@crawler.route("/download") 
 def download() :
 	pass
