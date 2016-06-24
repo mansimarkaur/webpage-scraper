@@ -39,7 +39,7 @@ def image(url, soup) :
 	images =[]
 	for i in img :
 		images.append(url + i.get("src")) #adds src attribute value to images list
-	return render_template("index.html", text = images)
+	return render_template("images.html", text = images)
 
 #displays hyperlinks
 def hyperlinks(url, soup) :
@@ -64,7 +64,7 @@ def txt(url, soup) :
 def formatter(url, soup) :
 	code = soup.prettify()#.encode('UTF-8')
 	print type(code)
-	return render_template("text.html", text = code)
+	return render_template("indent.html", text = code)
 
 @crawler.route("/download") 
 def download() :

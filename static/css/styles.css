@@ -798,7 +798,7 @@ h1.page-header {
 }
 
 .panel-body input[type=checkbox]:checked + label { 
-	text-decoration: line-through;
+	text-decoration: none;
 	color: #777; 
 }
 
