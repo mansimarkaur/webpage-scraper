@@ -14,10 +14,11 @@ def main() :
 @crawler.route("/driver", methods = ['POST'])
 def driver() :
 	url = request.form["inputName"] #fetches user entered URL
-	if not (url.startswith("https://")) or not(url.startswith("https://")) :
+	if not(url.startswith("http://")) or not(url.startswith("https://")) :
 		url = "http://" + url
 	if not url.endswith("/") :
 		url = url + "/"
+	print url
 	link = urllib2.urlopen(url) #returns obj 
 	soup = BeautifulSoup(link, 'html.parser') #returns beautifulsoup obj
 	job = request.form["submit"]
@@ -63,9 +64,11 @@ def formatter(url, soup) :
 	code = soup.prettify().encode('UTF-8')
 	return render_template("index.html", text = txt)
 
-if __name__ == "__main__" :
-	crawler.run()
-
 @crawler.route("/download") 
 def download() :
 	pass
+
+
+if __name__ == "__main__" :
+	crawler.run()
+
