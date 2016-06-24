@@ -14,7 +14,7 @@ def main() :
 @crawler.route("/driver", methods = ['POST'])
 def driver() :
 	url = request.form["inputName"] #fetches user entered URL
-	if not(url.startswith("http://")) or not(url.startswith("https://")) :
+	if not(url.startswith("http://") or url.startswith("https://")) :
 		url = "http://" + url
 	if not url.endswith("/") :
 		url = url + "/"
@@ -25,7 +25,7 @@ def driver() :
 	dict = {
 		"images" : image,
 		"hyperlinks" : hyperlinks,
-		"text" : text,
+		"text" : txt,
 		"formatter" : formatter
 		}
 	func = dict.get(job) #calls function acc to button pressed
@@ -55,9 +55,10 @@ def hyperlinks(url, soup) :
 	return render_template("index.html", text = links)
 
 #displays text after stripping html tags from src code
-def text(url, soup) :
-	txt = soup.get_text().encode('UTF-8') 
-	return render_template("index.html", text = txt)
+def txt(url, soup) :
+	t = soup.get_text()#.encode('UTF-8') 
+	print type(t)
+	return render_template("index.html", text = t)
 
 #displays formatted html src code, (not sure how it'll behave in index.html after being rendered)
 def formatter(url, soup) :
