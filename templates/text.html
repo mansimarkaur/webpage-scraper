@@ -9,16 +9,33 @@
 							<p style="color:#777;">{{ text }}</p>
 						</pre>
 					</div>
-					<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit" value="">Download</button>
+					<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit" onclick="save()">Download</button>
 				</div>
 									
 			</div><!--/.col-->
 	{% endblock %}
+
+	{% block download %}
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form class="form-horizontal" action="" method="post">
+					<fieldset>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="name">File Name</label>
+							<div class="col-md-9">
+								<input id="name" name="name" type="text" placeholder="Scraper" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12 widget-right">
+								<button type="submit" class="btn btn-default btn-md pull-right">Save</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	{% endblock %}
 	
-	<script>
-		$(document).ready(function(){
-			$('html, body').animate({
-        		scrollTop: $("#panel").offset().left
-    		}, "slow");
-		});
-	</script>	
+	
+	

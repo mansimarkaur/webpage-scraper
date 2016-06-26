@@ -17,7 +17,7 @@
 								
 						</li>
 					{% endfor %}
-					<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+					<button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit" onclick="save()">Save</button>
 				</div>
 			</div>
 								
@@ -26,8 +26,9 @@
 	<script>		    
 		$(document).ready(function(){
 			$('html, body').animate({
-        		scrollTop: $("#panel").offset().left
+        		scrollTop: $("#panel").offset().top
     		}, "slow");
+    		console.log("working");
 		});		
 	</script>	
 

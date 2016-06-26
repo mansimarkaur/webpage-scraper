@@ -54,13 +54,13 @@
 							</div>
 						</div>
 					</button>
-					<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" type="submit" value="hyperlinks">
+					<button class="col-xs-12 col-md-6 col-lg-3 butt" name="submit" type="submit" value="hyperlinks" >
 						<div class="panel panel-orange panel-widget">
 							<div class="row no-padding">
 								<div class="col-sm-3 col-lg-5 widget-left">
 									<svg class="glyph stroked chain"><use xlink:href="#stroked-chain"></use></svg>
 								</div>
-								<div class="col-sm-9 col-lg-7 widget-right">
+								<div class="col-sm-9 col-lg-7 widget-right" id="hyperlinks">
 									<div class="text-muted">Get</div>
 									<div class="large">Hyperlinks</div>
 								</div>
@@ -101,6 +101,11 @@
 			{% block panel %}
 			{% endblock %}
 		</div>
+		<div class="col-md-5" id="dialog" style="display: none;float: none;
+    margin-left: 30% ; top: 10px; position: fixed;">
+		{% block download %}
+		{% endblock %}
+	</div>
 		<footer id="foot-er" >
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -109,6 +114,7 @@
 			</div><!-- /.container-fluid -->
 		</footer>
 	</div>
+	
 
 
 	<script src="../static/js/jquery-1.11.1.min.js"></script>
@@ -118,6 +124,20 @@
 	<script src="../static/js/easypiechart.js"></script>
 	<script src="../static/js/easypiechart-data.js"></script>-->
 	<script src="../static/js/bootstrap-datepicker.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('html, body').animate({
+        		scrollTop: $("#panel").offset().left
+    		}, "slow");
+		});
+	</script>	
+	<script>
+		function save(){
+			document.getElementById("dialog").style.display="initial";
+			document.getElementsByClassName("container")[0].style.opacity = "0.3";
+			document.getElementById("panel").style.opacity = "0.3";
+		};
+	</script>
 	
 </body>
 
