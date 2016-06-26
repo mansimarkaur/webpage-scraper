@@ -1,10 +1,3 @@
-/*
-Lumino Admin Bootstrap Template
-Version 1.0
-*/
-
-
-/*Global Styles*/
 
 body {
 	background: #f1f4f7;
@@ -26,6 +19,10 @@ body {
 #panel{
 	float: none;
 	margin-left: 18%;
+}
+
+#hyperlinks{
+	padding-left: 4px !important;
 }
 
 p {
