@@ -39,28 +39,25 @@ def driver() :
 
 
 #displays image URLs
-def image(to_download) :
+def image() :
 	img = soup.find_all("img") #finds all <img>
 	if len(img) == 0 :
 		return render_template("index.html", text = ["No images to fetch"])
 	images =[]
 	for i in img :
 		images.append(url + i.get("src")) #adds src attribute value to images list
-		#if to_download :
-			#download(url, i.get("src"))
 	return render_template("images.html", text = images)
 
-def download(image) :
-	print url
-	print image
-	dir_name = url[7:]
-	print dir_name+image
-	print url+image
+def download(image, dir_name) :
 	try :
-		os.stat("let")
+		os.stat(dir_name)
 	except :
-		os.mkdir("let")
-	urllib.urlretrieve(url+image, "let")
+		os.mkdir(dir_name)
+	for i in image :
+		name = i[i.rfind("/")+1:]
+		if name == -1 :
+			name = i
+		urllib.urlretrieve(url+i, dir_name+'/'+name)
 
 #displays hyperlinks
 def hyperlinks() :
@@ -132,6 +129,21 @@ def download_code() :
 		with open(file_name + ".html", "w+") as source_code :
 			source_code.write(code.encode('UTF-8'))
 	return render_template("indent.html", text = code)
+
+@crawler.route("/download_images", methods = ['POST'])
+def download_images() :
+	img = soup.find_all("img")
+	images =[]
+	for i in img :
+		images.append(i.get("src"))
+	try :
+		to_download = bool(request.form['submit'])
+		dir_name = request.form['name']
+	except :
+		to_download = False
+	if to_download :
+		download(images, dir_name)
+	return render_template("images.html", text = images)
 
 
 

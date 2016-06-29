@@ -21,7 +21,7 @@
 	{% block download %}
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form class="form-horizontal" action="/text" method="post">
+				<form class="form-horizontal" action="/download_images" method="post">
 					<fieldset>
 						<div class="form-group">
 							<label class="col-md-3 control-label" for="name">Directory Name</label>
@@ -31,7 +31,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-12 widget-right">
-								<button type="submit" class="btn btn-default btn-md pull-right">Create and Save</button>
+								<button type="submit" name="submit" class="btn btn-default btn-md pull-right" value="True">Create and Save</button>
 							</div>
 						</div>
 					</fieldset>
