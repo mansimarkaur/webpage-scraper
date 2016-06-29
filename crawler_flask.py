@@ -81,12 +81,11 @@ def txt() :
 	return render_template("text.html", text = t)
 
 #displays formatted html src code, (not sure how it'll behave in index.html after being rendered)
-def formatter(soup, to_download) :
+def formatter() :
 	code = soup.prettify()#.encode('UTF-8')
-	if to_download :
-		with open("simar" + ".html", "w+") as pretty :
-			pretty.write(code.encode('UTF-8'))
 	return render_template("indent.html", text = code)
+
+#downloading functions
 
 @crawler.route('/text', methods = ['POST'])
 def text() :
@@ -120,6 +119,19 @@ def download_links() :
 			for i in links :
 				getlink.write(i)
 	return render_template("links.html", text = links)
+
+@crawler.route('/download_code', methods = ['POST'])
+def download_code() :
+	code = soup.prettify()
+	try :
+		to_download = bool(request.form['submit'])
+		file_name = request.form['name']
+	except :
+		to_download = False
+	if to_download :
+		with open(file_name + ".html", "w+") as source_code :
+			source_code.write(code.encode('UTF-8'))
+	return render_template("indent.html", text = code)
 
 
 
