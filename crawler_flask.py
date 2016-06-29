@@ -63,7 +63,7 @@ def download(image) :
 	urllib.urlretrieve(url+image, "let")
 
 #displays hyperlinks
-def hyperlinks(to_download) :
+def hyperlinks() :
 	link = soup.find_all("a") #finds all <a>
 	if len(link) == 0 :
 		return render_template("index.html", text = ["No links to fetch"])
@@ -100,6 +100,28 @@ def text() :
 		with open(file_name + ".txt", "w+") as pretty :
 			pretty.write(t.encode('UTF-8'))
 	return render_template("text.html", text = t)
+
+@crawler.route('/download_links', methods = ['POST'])
+def download_links() :
+	link = soup.find_all("a")
+	links = []
+	for i in link :
+		l = i.get("href") #adds href attribute value to links list
+		if l[:4] != "http" :
+			l = url + l 
+		links.append(l)
+	try :
+		to_download = bool(request.form['submit'])
+		file_name = request.form['name']
+	except :
+		to_download = False
+	if to_download :
+		with open(file_name + ".txt", "w+") as getlink :
+			for i in links :
+				getlink.write(i)
+	return render_template("links.html", text = links)
+
+
 
 
 if __name__ == "__main__" :
