@@ -84,25 +84,18 @@ def txt() :
 def formatter(soup, to_download) :
 	code = soup.prettify()#.encode('UTF-8')
 	if to_download :
-		with open("dua" + ".html", "w+") as pretty :
+		with open("simar" + ".html", "w+") as pretty :
 			pretty.write(code.encode('UTF-8'))
 	return render_template("indent.html", text = code)
 
 @crawler.route('/text', methods = ['POST'])
 def text() :
-	print "hello"
 	t = soup.get_text()#.encode('UTF-8') 
-	print "t here"
 	try :
-		print "o"
 		to_download = bool(request.form['submit'])
-		print to_download
 		file_name = request.form['name']
-		print "not"
 	except :
 		to_download = False
-		print "hee"
-	print "me"
 	if to_download :
 		with open(file_name + ".txt", "w+") as pretty :
 			pretty.write(t.encode('UTF-8'))
