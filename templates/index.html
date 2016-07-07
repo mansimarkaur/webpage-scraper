@@ -13,7 +13,7 @@
 
 <!--Icons-->
 <script src="../static/js/lumino.glyphs.js"></script>
-
+<script type="text/javascript"> $show = 0;</script>
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
@@ -104,7 +104,17 @@
 		<div class="col-md-5" id="dialog" style="display:none; float:none; margin-left:30%; top:60px; position:fixed;">
 		{% block download %}
 		{% endblock %}
-	</div>
+		</div>
+		<div class="col-md-5" id="complete" style="display:none; float:none; margin-left:30%; top:60px; position:fixed;">
+			<div class="panel panel-default" style="background-color:#30a5ff;">
+				<div class="panel-body">
+					<h3 style="text-align: center; color: #fff;">
+						{% block flash %}
+						{% endblock %}
+					</h3>
+				</div>
+			</div>
+		</div>
 		<footer id="foot-er" >
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -137,6 +147,13 @@
 			document.getElementById("panel").style.opacity = "0.3";
 		};
 	</script>
+	<script type="text/javascript">
+	if($show == 1){
+		document.getElementById("complete").style.display = "initial";
+		setTimeout(function(){ document.getElementById("complete").style.display = "none"; },1500)
+	}
+</script>
+
 	
 </body>
 

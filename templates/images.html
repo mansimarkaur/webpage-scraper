@@ -39,4 +39,12 @@
 			</div>
 		</div>
 	{% endblock %}
+	{% block flash %}
+			{%if get_flashed_messages()%}
+				{% for msg in get_flashed_messages()%}
+					<script type="text/javascript"> $show = 1;</script>
+					{{msg}}
+				{% endfor %}
+			{% endif %}
+	{% endblock %}
 	
