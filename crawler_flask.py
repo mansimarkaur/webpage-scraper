@@ -2,11 +2,11 @@ import urllib2
 import urllib
 import os
 import sys
-from flask import Flask, request, render_template
+from flask import Flask, flash, request, render_template
 from bs4 import BeautifulSoup
 
 crawler = Flask(__name__)
-
+crawler.secret_key = 'I <3 physics'
 
 @crawler.route("/")
 def main() :
@@ -31,7 +31,7 @@ def driver() :
 	dict = {
 		"images" : image,
 		"hyperlinks" : hyperlinks,
-		"text" : txt,
+		"text" : text,
 		"formatter" : formatter
 		}
 	func = dict.get(job) #calls function acc to button pressed
@@ -39,6 +39,7 @@ def driver() :
 
 
 #displays image URLs
+@crawler.route("/download_images", methods = ['POST'])
 def image() :
 	img = soup.find_all("img") #finds all <img>
 	if len(img) == 0 :
@@ -46,7 +47,16 @@ def image() :
 	images =[]
 	for i in img :
 		images.append(url + i.get("src")) #adds src attribute value to images list
+	try :
+		to_download = bool(request.form['submit'])
+		dir_name = request.form['name']
+	except :
+		to_download = False
+	if to_download :
+		download(images, dir_name)
+		flash('Download completed')
 	return render_template("images.html", text = images)
+
 
 def download(image, dir_name) :
 	try :
@@ -60,46 +70,11 @@ def download(image, dir_name) :
 		urllib.urlretrieve(url+i, dir_name+'/'+name)
 
 #displays hyperlinks
+@crawler.route('/download_links', methods = ['POST'])
 def hyperlinks() :
 	link = soup.find_all("a") #finds all <a>
 	if len(link) == 0 :
 		return render_template("index.html", text = ["No links to fetch"])
-	links = []
-	for i in link :
-		l = i.get("href") #adds href attribute value to links list
-		if l[:4] != "http" :
-			l = url + l 
-		links.append(l)
-	return render_template("links.html", text = links)
-
-#displays text after stripping html tags from src code
-def txt() :
-	t = soup.get_text()#.encode('UTF-8') 
-	return render_template("text.html", text = t)
-
-#displays formatted html src code, (not sure how it'll behave in index.html after being rendered)
-def formatter() :
-	code = soup.prettify()#.encode('UTF-8')
-	return render_template("indent.html", text = code)
-
-#downloading functions
-
-@crawler.route('/text', methods = ['POST'])
-def text() :
-	t = soup.get_text()#.encode('UTF-8') 
-	try :
-		to_download = bool(request.form['submit'])
-		file_name = request.form['name']
-	except :
-		to_download = False
-	if to_download :
-		with open(file_name + ".txt", "w+") as pretty :
-			pretty.write(t.encode('UTF-8'))
-	return render_template("text.html", text = t)
-
-@crawler.route('/download_links', methods = ['POST'])
-def download_links() :
-	link = soup.find_all("a")
 	links = []
 	for i in link :
 		l = i.get("href") #adds href attribute value to links list
@@ -115,11 +90,28 @@ def download_links() :
 		with open(file_name + ".txt", "w+") as getlink :
 			for i in links :
 				getlink.write(i)
+		flash('Download completed')
 	return render_template("links.html", text = links)
 
+#displays text after stripping html tags from src code
+@crawler.route('/text', methods = ['POST'])
+def text() :
+	t = soup.get_text()#.encode('UTF-8') 
+	try :
+		to_download = bool(request.form['submit'])
+		file_name = request.form['name']
+	except :
+		to_download = False
+	if to_download :
+		with open(file_name + ".txt", "w+") as pretty :
+			pretty.write(t.encode('UTF-8'))
+		flash('Download completed')
+	return render_template("text.html", text = t)
+
+#displays formatted html src code
 @crawler.route('/download_code', methods = ['POST'])
-def download_code() :
-	code = soup.prettify()
+def formatter() :
+	code = soup.prettify()#.encode('UTF-8')
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -128,24 +120,8 @@ def download_code() :
 	if to_download :
 		with open(file_name + ".html", "w+") as source_code :
 			source_code.write(code.encode('UTF-8'))
+		flash('Download completed')
 	return render_template("indent.html", text = code)
-
-@crawler.route("/download_images", methods = ['POST'])
-def download_images() :
-	img = soup.find_all("img")
-	images =[]
-	for i in img :
-		images.append(i.get("src"))
-	try :
-		to_download = bool(request.form['submit'])
-		dir_name = request.form['name']
-	except :
-		to_download = False
-	if to_download :
-		download(images, dir_name)
-	return render_template("images.html", text = images)
-
-
 
 
 if __name__ == "__main__" :
