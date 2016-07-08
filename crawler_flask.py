@@ -67,7 +67,8 @@ def download(image, dir_name) :
 		name = i[i.rfind("/")+1:]
 		if name == -1 :
 			name = i
-		urllib.urlretrieve(url+i, dir_name+'/'+name)
+		print dir_name+'/'+name
+		urllib.urlretrieve(i, dir_name+'/'+name)
 
 #displays hyperlinks
 @crawler.route('/download_links', methods = ['POST'])
