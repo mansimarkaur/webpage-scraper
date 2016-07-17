@@ -4,9 +4,14 @@ import os
 import sys
 from flask import Flask, flash, request, render_template
 from bs4 import BeautifulSoup
+from flask_mongoalchemy import MongoAlchemy
 
 crawler = Flask(__name__)
 crawler.secret_key = 'I <3 physics'
+# crawler.config['MONGOALCHEMY_DATABASE'] = 'website'
+# db = MongoAlchemy(crawler)
+
+from model import db
 
 @crawler.route("/")
 def main() :
@@ -47,6 +52,7 @@ def image() :
 	images =[]
 	for i in img :
 		images.append(url + i.get("src")) #adds src attribute value to images list
+		images_db(site = URL_db(website = url), img = images[-1]).save()
 	try :
 		to_download = bool(request.form['submit'])
 		dir_name = request.form['name']
@@ -73,6 +79,7 @@ def download(image, dir_name) :
 #displays hyperlinks
 @crawler.route('/download_links', methods = ['POST'])
 def hyperlinks() :
+	URL_db.query.getHyperlinks().first()
 	link = soup.find_all("a") #finds all <a>
 	if len(link) == 0 :
 		return render_template("index.html", text = ["No links to fetch"])
@@ -82,6 +89,8 @@ def hyperlinks() :
 		if l[:4] != "http" :
 			l = url + l 
 		links.append(l)
+	URL_db.query.getHyperlinks().first()
+	URL_db(sites = url, link = l).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -98,6 +107,7 @@ def hyperlinks() :
 @crawler.route('/text', methods = ['POST'])
 def text() :
 	t = soup.get_text()#.encode('UTF-8') 
+	text_db(site = URL_db(website = url), txt = t).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -113,6 +123,7 @@ def text() :
 @crawler.route('/download_code', methods = ['POST'])
 def formatter() :
 	code = soup.prettify()#.encode('UTF-8')
+	indent_db(site = URL_db(website = url), format = code).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -124,6 +135,24 @@ def formatter() :
 		flash('Download completed')
 	return render_template("indent.html", text = code)
 
+# class url (db.document) :
+# 	name = db.StringField()
+
+# class images (db.document) :
+# 	url = db.DocumentField(url)
+# 	img = db.StringField()
+
+# class hyperlinks (db.document) :
+# 	url = db.DocumentField(url)
+# 	link = db.StringField()
+
+# class text (db.document) :
+# 	url = db.DocumentField(url)
+# 	txt = db.StringField()
+
+# class indent (db.document) :
+# 	url = db.DocumentField(url)
+# 	format = db.StringField()
 
 if __name__ == "__main__" :
 	crawler.run()
