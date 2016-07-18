@@ -7,9 +7,7 @@ from bs4 import BeautifulSoup
 from flask_mongoalchemy import MongoAlchemy
 
 crawler = Flask(__name__)
-crawler.secret_key = 'I <3 physics'
-# crawler.config['MONGOALCHEMY_DATABASE'] = 'website'
-# db = MongoAlchemy(crawler)
+crawler.secret_key = 'continents9794'
 
 from model import *
 #from model import text_db

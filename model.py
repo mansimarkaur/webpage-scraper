@@ -2,6 +2,7 @@ from flask_mongoalchemy import MongoAlchemy, BaseQuery
 from flask import Flask
  
 crawler =  Flask(__name__)
+crawler.secret_key = 'continents9794'
 crawler.config['MONGOALCHEMY_DATABASE'] = 'website-scraper'
 crawler.config['MONGOALCHEMY_CONNECTION_STRING'] = 'mongodb://scraper:continents@ds023495.mlab.com:23495/website-scraper'
 
