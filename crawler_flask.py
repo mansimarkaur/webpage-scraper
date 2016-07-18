@@ -56,6 +56,8 @@ def image() :
 		for i in img :
 			images.append(url + i.get("src")) #adds src attribute value to images list
 		images_db(sites = url, images = images).save()
+	else :
+		images = images.images
 	try :
 		to_download = bool(request.form['submit'])
 		dir_name = request.form['name']
@@ -95,6 +97,8 @@ def hyperlinks() :
 				l = url + l 
 			links.append(l)
 		links_db(sites = url, links = links).save()
+	else :
+		links = links.links
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -114,6 +118,8 @@ def text() :
 	if t == None :
 		t = soup.get_text()#.encode('UTF-8') 
 		text_db(sites = url, text = t).save()
+	else :
+		t = t.text
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -132,6 +138,8 @@ def formatter() :
 	if code == None :
 		code = soup.prettify()#.encode('UTF-8')
 		indent_db(sites = url, indent = code).save()
+	else :
+		code = code.indent
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
