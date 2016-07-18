@@ -7,18 +7,26 @@ crawler.config['MONGOALCHEMY_CONNECTION_STRING'] = 'mongodb://scraper:continents
 
 db = MongoAlchemy(crawler)
 
-class getURL_db(BaseQuery) :
-	def getInfo(self, info, url) :
-		return self.filter(self.type.info == url)
+# class getURL_db(BaseQuery) :
+# 	def getInfo(self, info, url) :
+# 		return self.filter(self.type.info == url)
 
-class URL_db (db.Document) :
-	query_class = getURL_db
+
+class images_db(db.Document) :
 	sites = db.StringField()
-	images = db.ListField(db.Field())
-	links = db.ListField(db.Field())
-	text = db.StringField()
+	images = db.ListField(db.StringField())
+
+class links_db(db.Document) :
+	sites = db.StringField()
+	links = db.ListField(db.StringField())
+
+class indent_db(db.Document) :
+	sites = db.StringField()
 	indent = db.StringField()
 
+class text_db(db.Document) :
+	sites = db.StringField()
+	text = db.StringField()
 
 
 

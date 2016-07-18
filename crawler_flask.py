@@ -11,7 +11,8 @@ crawler.secret_key = 'I <3 physics'
 # crawler.config['MONGOALCHEMY_DATABASE'] = 'website'
 # db = MongoAlchemy(crawler)
 
-from model import db
+from model import *
+#from model import text_db
 
 @crawler.route("/")
 def main() :
@@ -49,10 +50,11 @@ def image() :
 	img = soup.find_all("img") #finds all <img>
 	if len(img) == 0 :
 		return render_template("index.html", text = ["No images to fetch"])
-	images =[]
+	images = []
+	to_save = []
 	for i in img :
 		images.append(url + i.get("src")) #adds src attribute value to images list
-		images_db(site = URL_db(website = url), img = images[-1]).save()
+	images_db(sites = url, images = images).save()
 	try :
 		to_download = bool(request.form['submit'])
 		dir_name = request.form['name']
@@ -79,7 +81,9 @@ def download(image, dir_name) :
 #displays hyperlinks
 @crawler.route('/download_links', methods = ['POST'])
 def hyperlinks() :
-	URL_db.query.getHyperlinks().first()
+	links = links_db.query.getInfo(links ,url).first()
+	#if len(links) == 0 :
+	print "me"
 	link = soup.find_all("a") #finds all <a>
 	if len(link) == 0 :
 		return render_template("index.html", text = ["No links to fetch"])
@@ -89,8 +93,7 @@ def hyperlinks() :
 		if l[:4] != "http" :
 			l = url + l 
 		links.append(l)
-	URL_db.query.getHyperlinks().first()
-	URL_db(sites = url, link = l).save()
+	links_db(sites = url, links = links).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -106,8 +109,9 @@ def hyperlinks() :
 #displays text after stripping html tags from src code
 @crawler.route('/text', methods = ['POST'])
 def text() :
+	
 	t = soup.get_text()#.encode('UTF-8') 
-	text_db(site = URL_db(website = url), txt = t).save()
+	text_db(sites = url, text = t).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -123,7 +127,7 @@ def text() :
 @crawler.route('/download_code', methods = ['POST'])
 def formatter() :
 	code = soup.prettify()#.encode('UTF-8')
-	indent_db(site = URL_db(website = url), format = code).save()
+	indent_db(sites = url, indent = code).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -155,5 +159,5 @@ def formatter() :
 # 	format = db.StringField()
 
 if __name__ == "__main__" :
-	crawler.run()
+	crawler.run(debug = True)
 
