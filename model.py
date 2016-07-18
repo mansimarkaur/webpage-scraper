@@ -7,26 +7,38 @@ crawler.config['MONGOALCHEMY_CONNECTION_STRING'] = 'mongodb://scraper:continents
 
 db = MongoAlchemy(crawler)
 
-# class getURL_db(BaseQuery) :
-# 	def getInfo(self, info, url) :
-# 		return self.filter(self.type.info == url)
+class db_query(BaseQuery) :
+	def text_query(self, url) :
+		return self.filter(self.type.sites == url).fields('text')
 
+	def images_query(self, url) :
+		return self.filter(self.type.sites == url).fields('images')
+
+	def links_query(self, url) :
+		return self.filter(self.type.sites == url).fields('links')
+
+	def indent_query(self, url) :
+		return self.filter(self.type.sites == url).fields('indent')
 
 class images_db(db.Document) :
-	sites = db.StringField()
-	images = db.ListField(db.StringField())
+	query_class = db_query
+	sites       = db.StringField()
+	images      = db.ListField(db.StringField())
 
 class links_db(db.Document) :
-	sites = db.StringField()
-	links = db.ListField(db.StringField())
+	query_class = db_query
+	sites       = db.StringField()
+	links       = db.ListField(db.StringField())
 
 class indent_db(db.Document) :
-	sites = db.StringField()
-	indent = db.StringField()
+	query_class = db_query
+	sites       = db.StringField()
+	indent      = db.StringField()
 
 class text_db(db.Document) :
-	sites = db.StringField()
-	text = db.StringField()
+	query_class = db_query 
+	sites       = db.StringField()
+	text        = db.StringField()
 
 
 

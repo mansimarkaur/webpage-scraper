@@ -47,14 +47,15 @@ def driver() :
 #displays image URLs
 @crawler.route("/download_images", methods = ['POST'])
 def image() :
-	img = soup.find_all("img") #finds all <img>
-	if len(img) == 0 :
-		return render_template("index.html", text = ["No images to fetch"])
-	images = []
-	to_save = []
-	for i in img :
-		images.append(url + i.get("src")) #adds src attribute value to images list
-	images_db(sites = url, images = images).save()
+	images = images_db.query.images_query(url).first()
+	if images == None :
+		img = soup.find_all("img") #finds all <img>
+		if len(img) == 0 :
+			return render_template("index.html", text = ["No images to fetch"])
+		images = []
+		for i in img :
+			images.append(url + i.get("src")) #adds src attribute value to images list
+		images_db(sites = url, images = images).save()
 	try :
 		to_download = bool(request.form['submit'])
 		dir_name = request.form['name']
@@ -81,19 +82,19 @@ def download(image, dir_name) :
 #displays hyperlinks
 @crawler.route('/download_links', methods = ['POST'])
 def hyperlinks() :
-	links = links_db.query.getInfo(links ,url).first()
-	#if len(links) == 0 :
-	print "me"
-	link = soup.find_all("a") #finds all <a>
-	if len(link) == 0 :
-		return render_template("index.html", text = ["No links to fetch"])
-	links = []
-	for i in link :
-		l = i.get("href") #adds href attribute value to links list
-		if l[:4] != "http" :
-			l = url + l 
-		links.append(l)
-	links_db(sites = url, links = links).save()
+	links = links_db.query.links_query(url).first()
+	if links == None :
+		print "me"
+		link = soup.find_all("a") #finds all <a>
+		if len(link) == 0 :
+			return render_template("index.html", text = ["No links to fetch"])
+		links = []
+		for i in link :
+			l = i.get("href") #adds href attribute value to links list
+			if l[:4] != "http" :
+				l = url + l 
+			links.append(l)
+		links_db(sites = url, links = links).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -109,9 +110,10 @@ def hyperlinks() :
 #displays text after stripping html tags from src code
 @crawler.route('/text', methods = ['POST'])
 def text() :
-	
-	t = soup.get_text()#.encode('UTF-8') 
-	text_db(sites = url, text = t).save()
+	t = text_db.query.text_query(url).first()
+	if t == None :
+		t = soup.get_text()#.encode('UTF-8') 
+		text_db(sites = url, text = t).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -126,8 +128,10 @@ def text() :
 #displays formatted html src code
 @crawler.route('/download_code', methods = ['POST'])
 def formatter() :
-	code = soup.prettify()#.encode('UTF-8')
-	indent_db(sites = url, indent = code).save()
+	code = indent_db.query.indent_query(url).first()
+	if code == None :
+		code = soup.prettify()#.encode('UTF-8')
+		indent_db(sites = url, indent = code).save()
 	try :
 		to_download = bool(request.form['submit'])
 		file_name = request.form['name']
@@ -139,24 +143,7 @@ def formatter() :
 		flash('Download completed')
 	return render_template("indent.html", text = code)
 
-# class url (db.document) :
-# 	name = db.StringField()
 
-# class images (db.document) :
-# 	url = db.DocumentField(url)
-# 	img = db.StringField()
-
-# class hyperlinks (db.document) :
-# 	url = db.DocumentField(url)
-# 	link = db.StringField()
-
-# class text (db.document) :
-# 	url = db.DocumentField(url)
-# 	txt = db.StringField()
-
-# class indent (db.document) :
-# 	url = db.DocumentField(url)
-# 	format = db.StringField()
 
 if __name__ == "__main__" :
 	crawler.run(debug = True)
