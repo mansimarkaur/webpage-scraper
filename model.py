@@ -2,8 +2,14 @@ from flask_mongoalchemy import MongoAlchemy, BaseQuery
 from flask import Flask
  
 crawler =  Flask(__name__)
-crawler.config['MONGOALCHEMY_DATABASE'] = 'websites'
+crawler.config['MONGOALCHEMY_DATABASE'] = 'website-scraper'
+crawler.config['MONGOALCHEMY_CONNECTION_STRING'] = 'mongodb://scraper:continents@ds023495.mlab.com:23495/website-scraper'
+
 db = MongoAlchemy(crawler)
+
+class getURL_db(BaseQuery) :
+	def getInfo(self, info, url) :
+		return self.filter(self.type.info == url)
 
 class URL_db (db.Document) :
 	query_class = getURL_db
@@ -13,8 +19,6 @@ class URL_db (db.Document) :
 	text = db.StringField()
 	indent = db.StringField()
 
-class getURL_db(db.Document) :
-	def getHyperlinks(self) :
-		return self.filter(self.type.sites)
+
 
 
