@@ -109,6 +109,20 @@
 			<div class="panel panel-default" style="background-color:#30a5ff;">
 				<div class="panel-body">
 					<h3 style="text-align: center; color: #fff;">
+						{%if get_flashed_messages()%}
+						{% for msg in get_flashed_messages()%}
+						<script type="text/javascript"> $show = 1;</script>
+						{{msg}}
+						{% endfor %}
+						{% endif %}
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5" id="complete" style="display:none; float:none; margin-left:30%; top:60px; position:fixed;">
+			<div class="panel panel-default" style="background-color:#30a5ff;">
+				<div class="panel-body">
+					<h3 style="text-align: center; color: #fff;">
 						{% block flash %}
 						{% endblock %}
 					</h3>

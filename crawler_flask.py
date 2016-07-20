@@ -28,7 +28,11 @@ def driver() :
 	if not url.endswith("/") :
 		url = url + "/"
 	print url
-	link = urllib2.urlopen(url) #returns obj 
+	try :
+		link = urllib2.urlopen(url) #returns obj 
+	except :
+		flash('Webpage did not return a OK status')
+		return render_template("index.html")
 	global soup
 	soup = BeautifulSoup(link, 'html.parser') #returns beautifulsoup obj
 	job = request.form["submit"]
