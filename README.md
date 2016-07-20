@@ -57,9 +57,9 @@
 
 ## Getting started
 	
-	-git clone http://github.com/mansimarkaur/webpage-scraper 
-	-cd webpage-scraper
-	-python crawler_flask.py
+	git clone http://github.com/mansimarkaur/webpage-scraper 
+	cd webpage-scraper
+	python crawler_flask.py
 
 	Open **http://127.0.0.1:5000/** in your browser.
 	Input URL and **have fun** 
