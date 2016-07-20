@@ -11,22 +11,22 @@
 ## Pre- requisites
  See [requirements] (https://github.com/mansimarkaur/webpage-scraper/blob/master/requirements.txt)
 	 
-	### To install flask:
+	To install flask:
 		```
 	 	[sudo] pip install flask
 	 	```
 	 	If you don't have [pip](https://pip.pypa.io) installed,
-    	[this Python installation guide](http://docs.python-guide.org/en/latest/starting/installation)
-     	can guide you through the process.
+    		[this Python installation guide](http://docs.python-guide.org/en/latest/starting/installation)
+     		can guide you through the process.
 
-	### To install BeautifulSoup:
+	To install BeautifulSoup:
 	 	```
 	 	[sudo] pip install bs4
 	 	```
 	 	OR
 	 	- [download the Beautiful Soup 4 source tarball](https://www.crummy.com/software/BeautifulSoup/bs4/download/4.0/)and install it with `setup.py`
 	 	- `python setup.py install`
-	### To install requests:
+	To install requests:
 		```
 	 	[sudo] pip install requests
 	 	```
@@ -38,14 +38,14 @@
 	 	#optionally, zipball is also available (for Windows users).
 	 	``
 	 	- python setup.py install
-	### To install MongoDB Community Edition:
+	To install MongoDB Community Edition:
 			- on OSX, refer to:
 				https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 			- on Ubuntu, refer to:
 				https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 			- on Windows, refer to:
 				https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
-	### To install flask_mongoalchemy:
+	To install flask_mongoalchemy:
 	 	```
 	 	[sudo] pip install flask-mongoalchemy
 	 	```
