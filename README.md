@@ -1,5 +1,5 @@
-# website-scraper
-`website-scraper` is a *flask* based application which allows the users to :
+# webpage-scraper
+`webpage-scraper` is a *flask* based application which allows the users to :
 
 - Input URL with the freedom of inputting it with/ without the protocol and sub-domain specifiers.
 - Fetch a list of URLs to all the images on the webpage with an option to download all the images in a directory with name specified by the user.
