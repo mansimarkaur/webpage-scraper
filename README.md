@@ -8,7 +8,7 @@
 - Fetch the text on the webpage stripping the html code. Save it in a text file with a filename of user's choice.
 - The database is deployed on [mLab](http://mlab.com/) and uses *MongoDB* for fast access to long list of images, hyperlinks and text for a URL that has been requested by some other user in the past, thus, reducing processing time for subsequent users.
 
-## Pre- requisites
+# Pre- requisites
  See [requirements] (https://github.com/mansimarkaur/webpage-scraper/blob/master/requirements.txt)
 	 
 	To install flask:
@@ -55,7 +55,7 @@
 	 	- [sudo] python setup.py develop
 	 	Make sure you have MongoDB installed
 
-## Getting started
+# Getting started
 	
 	git clone http://github.com/mansimarkaur/webpage-scraper 
 	cd webpage-scraper
