@@ -1,0 +1,3 @@
+special-vendored-path/* linguist-vendored
+lumino.glyphs.js linguist-vendored=false
+styles.css linguist-vendored=false
