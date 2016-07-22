@@ -1,4 +1,5 @@
 special-vendored-path/* linguist-vendored
-lumino.glyphs.js linguist-vendored=false
-styles.css linguist-vendored=false
-bootstrap.min.css linguist-vendored=false
+lumino.glyphs.js 
+styles.css 
+bootstrap.min.css
+*.html linguist-vendored=false
