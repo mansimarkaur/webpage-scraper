@@ -156,5 +156,5 @@ def formatter() :
 
 
 if __name__ == "__main__" :
-	crawler.run(debug = True)
+	crawler.run()
 
